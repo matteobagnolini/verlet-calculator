@@ -49,7 +49,7 @@ std::vector<VerletObject*> objs;
 class Solver
 {
 private:
-    sf::Vector2f gravity = {0.f, 490.f};
+    sf::Vector2f gravity = {0.f, 98.f};
 
 public:
     void update(float dt)

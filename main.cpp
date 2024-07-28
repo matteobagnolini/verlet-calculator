@@ -15,9 +15,9 @@ sf::RenderWindow window(sf::VideoMode(1280, 720), "Verlet Experiment");
 
 int main()
 {
-    window.setFramerateLimit(160);
+    window.setFramerateLimit(200);
     sf::Clock clock;
-    
+    sf::Clock ball_adding_clock;
     init();
     while (window.isOpen())
     {
@@ -26,6 +26,15 @@ int main()
         {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 window.close();
+        }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            sf::Time time = ball_adding_clock.getElapsedTime();
+            if (time.asSeconds() >= 0.35f)
+            {
+                init();
+                ball_adding_clock.restart();
+            }
         }
         float dt = clock.restart().asSeconds() * 2;
         update(dt);
@@ -40,16 +49,8 @@ int main()
 
 static void init()
 {
-    VerletObject* obj = new VerletObject(sf::Vector2f(700.f, 360.f), sf::Vector2f(0.f, 9.8f), 25.f, sf::Color::Green);
+    VerletObject* obj = new VerletObject(sf::Vector2f(700.f, 360.f), sf::Vector2f(0.f, 9.8f), 10.f, sf::Color(rand() % 0xFFFF, rand() % 0xFFFF, rand() % 0xFFFF));
     objs.push_back(obj);
-
-    obj = new VerletObject(sf::Vector2f(600.f, 500.f), sf::Vector2f(0.f, 9.8f), 25.f, sf::Color::Green);
-    objs.push_back(obj);
-
-
-    obj = new VerletObject(sf::Vector2f(800.f, 250.f), sf::Vector2f(0.f, 9.8f), 25.f, sf::Color::Green);
-    objs.push_back(obj);
-
 }
 
 static void update(float dt)
