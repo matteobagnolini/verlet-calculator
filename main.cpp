@@ -1,6 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <list>
+#include <vector>
 
 #include "physics.hpp"
 
@@ -41,14 +41,14 @@ int main()
 static void init()
 {
     VerletObject* obj = new VerletObject(sf::Vector2f(700.f, 360.f), sf::Vector2f(0.f, 9.8f), 25.f, sf::Color::Green);
-    objs.push_front(obj);
+    objs.push_back(obj);
 
     obj = new VerletObject(sf::Vector2f(600.f, 500.f), sf::Vector2f(0.f, 9.8f), 25.f, sf::Color::Green);
-    objs.push_front(obj);
+    objs.push_back(obj);
 
 
     obj = new VerletObject(sf::Vector2f(800.f, 250.f), sf::Vector2f(0.f, 9.8f), 25.f, sf::Color::Green);
-    objs.push_front(obj);
+    objs.push_back(obj);
 
 }
 

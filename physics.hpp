@@ -42,7 +42,7 @@ public:
 
 // Vector containing all verlet objects
 
-std::list<VerletObject*> objs;
+std::vector<VerletObject*> objs;
 
 // Class that solve collisions
 
@@ -96,6 +96,23 @@ public:
 
     void solveCollisions()
     {
-
+        uint32_t object_count = objs.size();
+        for (uint32_t i = 0; i < object_count; i++)
+        {
+            VerletObject* obj1 = objs.at(i);
+            for (uint32_t j = i+1; j < object_count; j++)
+            {
+                VerletObject* obj2 = objs.at(j);
+                sf::Vector2f coll_axis = obj1->position - obj2->position;
+                float dist = distance(coll_axis);
+                if (dist <= obj1->radius + obj2->radius)
+                {
+                    sf::Vector2f norm = coll_axis / dist;
+                    float delta = obj1->radius + obj2->radius - dist;
+                    obj1->position += 0.5f * delta * norm;
+                    obj2->position -= 0.5f * delta * norm;
+                }
+            }
+        }
     }
 };
