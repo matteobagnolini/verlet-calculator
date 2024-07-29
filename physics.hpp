@@ -49,16 +49,18 @@ std::vector<VerletObject*> objs;
 class Solver
 {
 private:
-    sf::Vector2f gravity = {0.f, 98.f};
+    sf::Vector2f gravity = {0.f, 980.f};
 
 public:
     void update(float dt)
     {
-        float subdt = dt / 8;
-        for (int i = 0; i < 8; i++)
+        float sub_steps = 8;
+        float sub_dt = dt / sub_steps;
+        for (int i = 0; i < sub_steps; i++)
         {
+            // applyGravity();
+            updatePosition(sub_dt);
             applyGravity();
-            updatePosition(subdt);
             applyContraints();
             solveCollisions();
         }
@@ -100,6 +102,7 @@ public:
 
     void solveCollisions()
     {
+        float response_coefficient = 0.70f;
         uint32_t object_count = objs.size();
         for (uint32_t i = 0; i < object_count; i++)
         {
@@ -112,7 +115,7 @@ public:
                 if (dist <= obj1->radius + obj2->radius)
                 {
                     sf::Vector2f norm = coll_axis / dist;
-                    float delta = obj1->radius + obj2->radius - dist;
+                    float delta = response_coefficient * (obj1->radius + obj2->radius - dist);
                     obj1->position += 0.5f * delta * norm;
                     obj2->position -= 0.5f * delta * norm;
                 }
