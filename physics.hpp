@@ -54,10 +54,14 @@ private:
 public:
     void update(float dt)
     {
-        applyGravity();
-        updatePosition(dt);
-        applyContraints();
-        solveCollisions();
+        float subdt = dt / 8;
+        for (int i = 0; i < 8; i++)
+        {
+            applyGravity();
+            updatePosition(subdt);
+            applyContraints();
+            solveCollisions();
+        }
     }
 
     void updatePosition(float dt)
