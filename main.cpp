@@ -30,7 +30,7 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
             sf::Time time = ball_adding_clock.getElapsedTime();
-            if (time.asSeconds() >= 0.35f)
+            if (time.asSeconds() >= 0.1f)
             {
                 init();
                 ball_adding_clock.restart();
@@ -49,7 +49,7 @@ int main()
 
 static void init()
 {
-    VerletObject* obj = new VerletObject(sf::Vector2f(700.f, 360.f), sf::Vector2f(0.f, 9.8f), 10.f, sf::Color(rand() % 0xFFFF, rand() % 0xFFFF, rand() % 0xFFFF));
+    VerletObject* obj = new VerletObject(sf::Vector2f(700.f, 360.f), sf::Vector2f(100000.f, 98.f), rand() % 15 + 10, sf::Color(rand() % 0xFFFF, rand() % 0xFFFF, rand() % 0xFFFF));
     objs.push_back(obj);
 }
 
