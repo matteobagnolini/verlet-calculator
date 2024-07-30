@@ -40,29 +40,31 @@ public:
 
 };
 
-// Vector containing all verlet objects
-
-std::vector<VerletObject*> objs;
-
 // Class that solve collisions
 
 class Solver
 {
 private:
+    
+    float time = 0.0f;
+    float frame_dt = 0.0f;
+    int sub_steps = 8;
     sf::Vector2f gravity = {0.f, 980.f};
 
+    std::vector<VerletObject*> objs;
+    
+
 public:
-    void update(float dt)
+    void update()
     {
-        float sub_steps = 8;
-        float sub_dt = dt / sub_steps;
+        time += frame_dt;
+        float sub_dt = frame_dt / sub_steps;
         for (int i = 0; i < sub_steps; i++)
         {
-            // applyGravity();
-            updatePosition(sub_dt);
             applyGravity();
-            applyContraints();
             solveCollisions();
+            applyContraints();
+            updatePosition(sub_dt);
         }
     }
 
@@ -120,6 +122,31 @@ public:
                     obj2->position -= 0.5f * delta * norm;
                 }
             }
+        }
+    }
+
+    void addItem()
+    {
+        VerletObject* obj = new VerletObject(sf::Vector2f(400.f, 360.f), sf::Vector2f(100000.f, 980.f), rand() % 10 + 5, sf::Color(rand() % 0xFFFF, rand() % 0xFFFF, rand() % 0xFFFF));
+        objs.push_back(obj);
+
+    }
+
+    std::vector<VerletObject*> getItems()
+    {
+        return objs;
+    }
+
+    void setRefreshRate(int refreshRate)
+    {
+        this->frame_dt = 1.f / refreshRate;
+    }
+
+    void destroy()
+    {
+        for (auto& obj : objs)
+        {
+            delete obj;
         }
     }
 };
