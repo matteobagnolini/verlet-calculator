@@ -7,5 +7,5 @@ all: app.exe
 app.exe: main.o
 		g++ -o app.exe main.o $(CPPFLAGS) -I$(SFML_PATH)/include -L$(SFML_PATH)/lib $(SFML_INCLUDES)
 
-main.o: main.cpp physics.hpp math.hpp
+main.o: main.cpp physics.hpp renderer.hpp math.hpp
 		g++ -c main.cpp $(CPPFLAGS)
