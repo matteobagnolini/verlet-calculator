@@ -15,6 +15,11 @@ int main()
     Solver solver;
     Renderer renderer{window};
 
+    uint32_t ball_counter = 0;
+    sf::Font font;
+    font.loadFromFile("/Library/Fonts/Arial Unicode.ttf");
+    sf::Text text;
+    text.setFont(font);
 
     int refreshRate = 60;
 
@@ -34,15 +39,18 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
             sf::Time time = clock.getElapsedTime();
-            if (time.asSeconds() >= 0.15f)
+            if (time.asSeconds() >= 0.01f)
             {
                 solver.addItem();
                 clock.restart();
+                ball_counter++;
+                text.setString(std::to_string(ball_counter));
             }
         }
         solver.update();
         window.clear();
         renderer.render(solver);
+        window.draw(text);
         window.display();
 
     }
