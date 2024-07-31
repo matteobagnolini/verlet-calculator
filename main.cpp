@@ -28,6 +28,7 @@ int main()
     window.setFramerateLimit(refreshRate);
 
     sf::Clock clock;
+    sf::Clock fps_clock;
     while (window.isOpen())
     {
         sf::Event event;
@@ -47,6 +48,9 @@ int main()
                 text.setString(std::to_string(ball_counter));
             }
         }
+
+        std::cout << 1 / fps_clock.restart().asSeconds() << std::endl;
+
         solver.update();
         window.clear();
         renderer.render(solver);
