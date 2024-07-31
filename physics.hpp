@@ -29,7 +29,6 @@ public:
         sf::Vector2f velocity = position - position_last;
         position_last = position;
         position = position + velocity + acceleration * dt * dt;
-        std::cout << position.y - position_last.y << std::endl;
         acceleration = {};
     }
 
@@ -104,7 +103,7 @@ public:
 
     void solveCollisions()
     {
-        float response_coefficient = 0.70f;
+        float response_coefficient = 0.5f;
         uint32_t object_count = objs.size();
         for (uint32_t i = 0; i < object_count; i++)
         {
